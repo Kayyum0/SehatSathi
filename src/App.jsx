@@ -1,17 +1,34 @@
 // // src/App.jsx
-// import { useState } from "react"
-// import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
-// import SplashScreen from "./components/SplashScreen"
-// import Login from "./components/Login"
-// import Register from "./components/Register"
+// import { useState, useEffect } from "react";
+// import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+// import SplashScreen from "./components/SplashScreen";
+// import Login from "./components/Login";
+// import Register from "./components/Register";
 
 // function App() {
-//   const [showSplash, setShowSplash] = useState(true)
+//   const [showSplash, setShowSplash] = useState(true);
+
+//   useEffect(() => {
+//     // Check if splash was already shown in this session
+//     const hasSeenSplash = sessionStorage.getItem("hasSeenSplash");
+
+//     if (hasSeenSplash) {
+//       setShowSplash(false); // skip splash if already shown
+//     } else {
+//       // wait for splash to finish, then set flag
+//       const timer = setTimeout(() => {
+//         setShowSplash(false);
+//         sessionStorage.setItem("hasSeenSplash", "true");
+//       }, 3000); // match your SplashScreen animation duration
+
+//       return () => clearTimeout(timer);
+//     }
+//   }, []);
 
 //   return (
 //     <Router>
 //       {showSplash ? (
-//         <SplashScreen onFinish={() => setShowSplash(false)} />
+//         <SplashScreen />
 //       ) : (
 //         <Routes>
 //           <Route path="/" element={<Navigate to="/login" />} />
@@ -20,49 +37,55 @@
 //         </Routes>
 //       )}
 //     </Router>
-//   )
+//   );
 // }
 
-// export default App
-
+// export default App;
 
 // src/App.jsx
-import { useState, useEffect } from "react"
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
-import SplashScreen from "./components/SplashScreen"
-import Login from "./components/Login"
-import Register from "./components/Register"
+import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import SplashScreen from "./components/SplashScreen";
+import LandingPage from "./components/LandingPage";
+import Login from "./components/Login";
+import Register from "./components/Register";
 
 function App() {
-  const [showSplash, setShowSplash] = useState(true)
+  const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
-    // Check if we've already shown the splash screen
-    const hasSeenSplash = localStorage.getItem('hasSeenSplash');
-    
+    // Check if splash was already shown in this session
+    const hasSeenSplash = sessionStorage.getItem("hasSeenSplash");
+
     if (hasSeenSplash) {
-      setShowSplash(false);
+      setShowSplash(false); // skip splash if already shown
+    } else {
+      // wait for splash to finish, then set flag
+      const timer = setTimeout(() => {
+        setShowSplash(false);
+        sessionStorage.setItem("hasSeenSplash", "true");
+      }, 3000); // match your SplashScreen animation duration
+
+      return () => clearTimeout(timer);
     }
   }, []);
-
-  const handleSplashFinish = () => {
-    setShowSplash(false);
-    localStorage.setItem('hasSeenSplash', 'true');
-  }
 
   return (
     <Router>
       {showSplash ? (
-        <SplashScreen onFinish={handleSplashFinish} />
+        <SplashScreen />
       ) : (
         <Routes>
-          <Route path="/" element={<Navigate to="/login" />} />
+          {/* Default → LandingPage */}
+          <Route path="/" element={<LandingPage />} />
+
+          {/* Auth routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
       )}
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
