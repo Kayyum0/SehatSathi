@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ Import navigate
 import Logo from "../assets/logo.png";
 import GoogleSvg from "../assets/icons8-google.svg";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function Login({ onClose, switchToRegister }) {
+  const navigate = useNavigate(); // ✅ setup navigate
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
@@ -33,10 +35,13 @@ export default function Login({ onClose, switchToRegister }) {
     e.preventDefault();
     if (validateForm()) {
       setIsLoading(true);
+
       setTimeout(() => {
         console.log("Login data:", formData);
         setIsLoading(false);
-        if (onClose) onClose();
+
+        // ✅ Redirect to Dashboard after login
+        navigate("/dashboard");
       }, 1500);
     }
   };
@@ -54,8 +59,14 @@ export default function Login({ onClose, switchToRegister }) {
       {/* Left side - Logo */}
       <div className="hidden md:flex w-2/5 bg-white items-center justify-center p-6">
         <div className="text-center">
-          <img src={Logo} alt="SehatSathi Logo" className="w-full max-w-[180px] mx-auto object-contain mb-4" />
-          <h3 className="text-xl font-bold text-gray-800 mb-2">Welcome to SehatSathi</h3>
+          <img
+            src={Logo}
+            alt="SehatSathi Logo"
+            className="w-full max-w-[180px] mx-auto object-contain mb-4"
+          />
+          <h3 className="text-xl font-bold text-gray-800 mb-2">
+            Welcome to SehatSathi
+          </h3>
           <p className="text-gray-600 text-sm">Your health, our priority</p>
         </div>
       </div>
@@ -66,8 +77,12 @@ export default function Login({ onClose, switchToRegister }) {
           <img src={Logo} alt="SehatSathi Logo" className="w-16 h-16 object-contain" />
         </div>
 
-        <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2 text-center">Welcome back!</h2>
-        <p className="text-gray-500 text-sm mb-4 text-center">Please enter your details to sign in</p>
+        <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2 text-center">
+          Welcome back!
+        </h2>
+        <p className="text-gray-500 text-sm mb-4 text-center">
+          Please enter your details to sign in
+        </p>
 
         <form className="space-y-3" onSubmit={handleSubmit}>
           <div>
@@ -78,10 +93,14 @@ export default function Login({ onClose, switchToRegister }) {
               value={formData.email}
               onChange={handleChange}
               className={`w-full px-4 py-2.5 rounded-lg border focus:outline-none focus:ring-2 transition-colors text-sm ${
-                errors.email ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-teal-500"
+                errors.email
+                  ? "border-red-500 focus:ring-red-500"
+                  : "border-gray-300 focus:ring-teal-500"
               }`}
             />
-            {errors.email && <p className="text-red-500 text-xs mt-1 px-1">{errors.email}</p>}
+            {errors.email && (
+              <p className="text-red-500 text-xs mt-1 px-1">{errors.email}</p>
+            )}
           </div>
 
           <div>
@@ -93,7 +112,9 @@ export default function Login({ onClose, switchToRegister }) {
                 value={formData.password}
                 onChange={handleChange}
                 className={`w-full px-4 py-2.5 rounded-lg border focus:outline-none focus:ring-2 transition-colors text-sm ${
-                  errors.password ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-teal-500"
+                  errors.password
+                    ? "border-red-500 focus:ring-red-500"
+                    : "border-gray-300 focus:ring-teal-500"
                 }`}
               />
               <span
@@ -103,15 +124,25 @@ export default function Login({ onClose, switchToRegister }) {
                 {showPassword ? <FaEyeSlash size={14} /> : <FaEye size={14} />}
               </span>
             </div>
-            {errors.password && <p className="text-red-500 text-xs mt-1 px-1">{errors.password}</p>}
+            {errors.password && (
+              <p className="text-red-500 text-xs mt-1 px-1">{errors.password}</p>
+            )}
           </div>
 
           <div className="flex items-center justify-between text-xs md:text-sm">
             <label className="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" className="rounded text-teal-500 focus:ring-teal-500" />
+              <input
+                type="checkbox"
+                className="rounded text-teal-500 focus:ring-teal-500"
+              />
               <span className="text-gray-600">Remember me</span>
             </label>
-            <a href="#" className="text-teal-600 hover:text-teal-700 hover:underline transition-colors">Forgot password?</a>
+            <a
+              href="#"
+              className="text-teal-600 hover:text-teal-700 hover:underline transition-colors"
+            >
+              Forgot password?
+            </a>
           </div>
 
           <button
@@ -127,7 +158,9 @@ export default function Login({ onClose, switchToRegister }) {
               <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-center text-xs">
-              <span className="px-2 bg-white text-gray-500">Or continue with</span>
+              <span className="px-2 bg-white text-gray-500">
+                Or continue with
+              </span>
             </div>
           </div>
 

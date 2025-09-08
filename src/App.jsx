@@ -49,6 +49,7 @@ import SplashScreen from "./components/SplashScreen";
 import LandingPage from "./components/LandingPage";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import Dashboard from "./components/pages/Dashboard";
 
 function App() {
   const [showSplash, setShowSplash] = useState(true);
@@ -82,6 +83,7 @@ function App() {
           {/* Auth routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       )}
     </Router>
