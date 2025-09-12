@@ -1,5 +1,6 @@
 // src/components/pages/Dashboard.jsx
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ for redirect
 import {
   FaTachometerAlt,
   FaUser,
@@ -9,13 +10,17 @@ import {
   FaIdCard,
   FaSignOutAlt,
 } from "react-icons/fa";
+
 import UserProfile from "./UserProfile";
 import DashboardMain from "./DashboardMain"; 
 import Appointment from "./Appointment";
 import Emergency from "./Emergency";
 import HealthcareCard from "./HealthcareCard";
+import SymptomChecker from "./SymptomChecker";
+
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("dashboard");
+  const navigate = useNavigate(); // ✅ hook for navigation
 
   const renderContent = () => {
     switch (activeTab) {
@@ -28,17 +33,19 @@ export default function Dashboard() {
       case "emergency":
         return <Emergency />;
       case "ai-checker":
-        return (
-          <div>
-            <h1 className="text-2xl font-bold mb-4">AI Symptom Checker</h1>
-            <p className="text-gray-600">AI symptom analysis tool will go here.</p>
-          </div>
-        );
+        return <SymptomChecker />;
       case "health-card":
         return <HealthcareCard />;
       default:
         return null;
     }
+  };
+
+  const handleLogout = () => {
+    // optional: clear any login state / session
+    sessionStorage.removeItem("user");
+    localStorage.removeItem("user");
+    navigate("/"); // ✅ redirect to LandingPage
   };
 
   return (
@@ -116,7 +123,10 @@ export default function Dashboard() {
         </nav>
 
         <div className="p-4 border-t border-teal-600">
-          <button className="flex items-center gap-3 w-full px-4 py-2 rounded-lg text-left hover:bg-red-600">
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 w-full px-4 py-2 rounded-lg text-left hover:bg-red-600"
+          >
             <FaSignOutAlt /> Logout
           </button>
         </div>

@@ -1,25 +1,20 @@
+// src/components/HealthcareCard.jsx
 import { useState, useRef } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { 
-  FaUser, 
-  FaBirthdayCake, 
-  FaVenusMars, 
-  FaMapMarkerAlt, 
-  FaIdCard, 
-  FaDownload,
-  FaFileImage,
-  FaFilePdf,
-  FaShieldAlt
+  FaUser, FaBirthdayCake, FaVenusMars, FaMapMarkerAlt, FaIdCard, 
+  FaDownload, FaFileImage, FaFilePdf, FaShieldAlt, FaAngleDown, FaAngleUp
 } from 'react-icons/fa';
 
 const HealthcareCard = () => {
   const cardRef = useRef();
-  const [patientData, setPatientData] = useState({
+  const [expanded, setExpanded] = useState(false);
+  const [patientData] = useState({
     name: "Rahul Sharma",
-    age: "42 years",
+    age: "42 yrs",
     dob: "15-03-1982",
     gender: "Male",
-    address: "A-204, Green Valley Apartments, Sector 45, Gurugram, Haryana 122003",
+    address: "A-204, Green Valley Apartments, Gurugram, Haryana",
     uniqueId: "HSH-9824-5763-1982",
     bloodGroup: "B+",
     emergencyContact: "+91 9876543210",
@@ -28,111 +23,76 @@ const HealthcareCard = () => {
     photo: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&q=80"
   });
 
-  const downloadAsImage = () => {
-    // This would be implemented using html2canvas or similar in a real app
-    alert("In a real application, this would download the card as an image. Implementation would use html2canvas.");
-  };
-
-  const downloadAsPDF = () => {
-    // This would be implemented using jsPDF or similar in a real app
-    alert("In a real application, this would download the card as a PDF. Implementation would use jsPDF.");
-  };
+  const downloadAsImage = () => alert("Download as Image triggered");
+  const downloadAsPDF = () => alert("Download as PDF triggered");
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-teal-50 py-8 px-4">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">Healthcare ID Card</h1>
-          <p className="text-gray-600">Your personal medical information card for quick access to healthcare services</p>
+      <div className="max-w-3xl mx-auto space-y-6">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold text-gray-800 mb-1">Healthcare ID Card</h1>
+          <p className="text-gray-600 text-sm">Quick access to your healthcare information</p>
         </div>
 
-        {/* Healthcare Card */}
+        {/* Card */}
         <div 
           ref={cardRef}
-          className="bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-blue-100 mb-8"
+          className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-teal-100"
         >
-          <div className="bg-gradient-to-r from-blue-600 to-teal-600 p-4 text-white">
-            <div className="flex justify-between items-center">
-              <h2 className="text-xl font-bold">HealthSeva Card</h2>
-              <div className="flex items-center">
-                <FaShieldAlt className="mr-2" />
-                <span>Verified</span>
-              </div>
+          <div className="bg-gradient-to-r from-teal-600 to-teal-500 p-4 text-white flex justify-between items-center">
+            <h2 className="font-bold text-lg">HealthSeva Card</h2>
+            <div className="flex items-center space-x-1">
+              <FaShieldAlt />
+              <span className="text-sm">Verified</span>
             </div>
           </div>
-          
-          <div className="p-6">
-            <div className="flex flex-col md:flex-row">
-              {/* Patient Photo and Basic Info */}
-              <div className="md:w-1/3 pr-4 border-r border-gray-200">
-                <div className="flex flex-col items-center mb-4">
-                  <img 
-                    src={patientData.photo} 
-                    alt={patientData.name} 
-                    className="w-32 h-32 rounded-full object-cover border-4 border-blue-100 shadow-md"
-                  />
-                  <h3 className="text-xl font-bold mt-4 text-gray-800">{patientData.name}</h3>
-                  <p className="text-blue-600 font-semibold">{patientData.age}</p>
-                </div>
-                
-                <div className="bg-blue-50 p-4 rounded-lg mb-4">
-                  <h4 className="font-semibold text-gray-700 mb-2">In Case of Emergency</h4>
-                  <p className="text-sm">{patientData.emergencyContact}</p>
-                  <p className="text-sm mt-1">Blood Group: <span className="font-bold text-red-600">{patientData.bloodGroup}</span></p>
-                </div>
-              </div>
-              
-              {/* Patient Details */}
-              <div className="md:w-2/3 pl-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                  <div className="flex items-start">
-                    <FaBirthdayCake className="text-blue-600 mt-1 mr-2" />
-                    <div>
-                      <p className="text-sm text-gray-500">Date of Birth</p>
-                      <p className="font-semibold">{patientData.dob}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start">
-                    <FaVenusMars className="text-blue-600 mt-1 mr-2" />
-                    <div>
-                      <p className="text-sm text-gray-500">Gender</p>
-                      <p className="font-semibold">{patientData.gender}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start">
-                    <FaMapMarkerAlt className="text-blue-600 mt-1 mr-2" />
-                    <div>
-                      <p className="text-sm text-gray-500">Address</p>
-                      <p className="font-semibold text-sm">{patientData.address}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start">
-                    <FaIdCard className="text-blue-600 mt-1 mr-2" />
-                    <div>
-                      <p className="text-sm text-gray-500">Unique ID</p>
-                      <p className="font-semibold">{patientData.uniqueId}</p>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="mb-6">
-                  <h4 className="font-semibold text-gray-700 mb-2">Medical Information</h4>
-                  <div className="bg-gray-50 p-3 rounded-lg">
-                    <p className="text-sm"><span className="font-semibold">Primary Physician:</span> {patientData.primaryCarePhysician}</p>
-                    <p className="text-sm mt-1"><span className="font-semibold">Allergies:</span> {patientData.allergies}</p>
-                  </div>
-                </div>
+
+          <div className="p-5 flex flex-col md:flex-row gap-6">
+            {/* Left Column: Photo + Essentials */}
+            <div className="md:w-1/3 flex flex-col items-center">
+              <img 
+                src={patientData.photo} 
+                alt={patientData.name} 
+                className="w-28 h-28 rounded-full object-cover border-4 border-teal-100 shadow-lg"
+              />
+              <h3 className="font-bold text-lg mt-3">{patientData.name}</h3>
+              <p className="text-teal-600 font-semibold">{patientData.age}</p>
+
+              <div className="bg-teal-50 p-3 rounded-lg mt-4 w-full text-center">
+                <p className="text-xs font-semibold text-gray-700">Emergency Contact</p>
+                <p className="text-sm">{patientData.emergencyContact}</p>
+                <p className="text-xs mt-1">Blood Group: <span className="font-bold text-red-600">{patientData.bloodGroup}</span></p>
               </div>
             </div>
-            
-            {/* QR Code Section */}
-            <div className="border-t border-gray-200 pt-4 mt-4">
-              <div className="flex flex-col md:flex-row justify-between items-center">
-                <div className="mb-4 md:mb-0">
-                  <p className="text-sm text-gray-600 mb-2">Scan this QR code to access medical records</p>
+
+            {/* Right Column: Details + QR */}
+            <div className="md:w-2/3 flex flex-col justify-between">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <DetailItem icon={<FaBirthdayCake className="text-teal-600" />} label="DOB" value={patientData.dob} />
+                <DetailItem icon={<FaVenusMars className="text-teal-600" />} label="Gender" value={patientData.gender} />
+                <DetailItem icon={<FaMapMarkerAlt className="text-teal-600" />} label="Address" value={patientData.address} small />
+                <DetailItem icon={<FaIdCard className="text-teal-600" />} label="Unique ID" value={patientData.uniqueId} />
+              </div>
+
+              <button 
+                onClick={() => setExpanded(!expanded)}
+                className="mt-3 text-sm text-teal-600 font-semibold flex items-center justify-center space-x-1 hover:underline"
+              >
+                <span>{expanded ? 'Hide Medical Info' : 'Show Medical Info'}</span>
+                {expanded ? <FaAngleUp /> : <FaAngleDown />}
+              </button>
+
+              {expanded && (
+                <div className="mt-3 bg-gray-50 p-3 rounded-lg">
+                  <p className="text-sm"><span className="font-semibold">Primary Physician:</span> {patientData.primaryCarePhysician}</p>
+                  <p className="text-sm mt-1"><span className="font-semibold">Allergies:</span> {patientData.allergies}</p>
+                </div>
+              )}
+
+              {/* QR Code */}
+              <div className="mt-4 flex flex-col md:flex-row md:justify-between items-center gap-3">
+                <div className="text-center">
+                  <p className="text-xs text-gray-500 mb-1">Scan QR for records</p>
                   <div className="bg-white p-2 border border-gray-200 rounded-lg inline-block">
                     <QRCodeSVG 
                       value={`https://healthrecords.example.com/patient/${patientData.uniqueId}`}
@@ -142,69 +102,44 @@ const HealthcareCard = () => {
                     />
                   </div>
                 </div>
-                
-                <div className="text-center">
-                  <p className="text-xs text-gray-500 mb-2">Issued by: HealthSeva Network</p>
-                  <p className="text-xs text-gray-500">Valid until: 15-03-2027</p>
+                <div className="text-center text-xs text-gray-500">
+                  <p>Issued by: HealthSeva Network</p>
+                  <p>Valid until: 15-03-2027</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        
-        {/* Download Options */}
-        <div className="bg-white rounded-xl shadow-md p-6">
-          <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-            <FaDownload className="mr-2 text-blue-500" /> Download Your Healthcare Card
-          </h3>
-          <p className="text-gray-600 mb-4">Download your healthcare card for offline access or printing.</p>
-          
-          <div className="flex flex-wrap gap-4">
-            <button 
-              onClick={downloadAsImage}
-              className="flex items-center px-4 py-3 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-lg shadow-md hover:from-blue-600 hover:to-blue-800 transition-all"
-            >
-              <FaFileImage className="mr-2" />
-              Download as Image
-            </button>
-            
-            <button 
-              onClick={downloadAsPDF}
-              className="flex items-center px-4 py-3 bg-gradient-to-r from-red-500 to-red-700 text-white rounded-lg shadow-md hover:from-red-600 hover:to-red-800 transition-all"
-            >
-              <FaFilePdf className="mr-2" />
-              Download as PDF
-            </button>
-          </div>
-        </div>
-        
-        {/* Information Section */}
-        <div className="mt-8 bg-blue-50 rounded-xl p-6 border border-blue-100">
-          <h3 className="text-xl font-semibold text-gray-800 mb-4">About Your Healthcare Card</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <h4 className="font-semibold text-blue-700 mb-2">Benefits of Your Health Card</h4>
-              <ul className="list-disc pl-5 text-sm text-gray-700">
-                <li>Quick access to your medical information in emergencies</li>
-                <li>Seamless sharing of records with healthcare providers</li>
-                <li>Reduced paperwork at hospitals and clinics</li>
-                <li>Secure storage of your medical history</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold text-blue-700 mb-2">How to Use Your Card</h4>
-              <ul className="list-disc pl-5 text-sm text-gray-700">
-                <li>Present this card at any healthcare facility</li>
-                <li>Allow medical staff to scan the QR code</li>
-                <li>Keep your card secure and report if lost</li>
-                <li>Update information regularly with your provider</li>
-              </ul>
-            </div>
-          </div>
+
+        {/* Download Buttons */}
+        <div className="flex flex-wrap gap-4 justify-center">
+          <button 
+            onClick={downloadAsImage}
+            className="flex items-center px-4 py-3 bg-gradient-to-r from-teal-500 to-teal-700 text-white rounded-lg shadow-md hover:from-teal-600 hover:to-teal-800 transition-all"
+          >
+            <FaFileImage className="mr-2" /> Download as Image
+          </button>
+          <button 
+            onClick={downloadAsPDF}
+            className="flex items-center px-4 py-3 bg-gradient-to-r from-red-500 to-red-700 text-white rounded-lg shadow-md hover:from-red-600 hover:to-red-800 transition-all"
+          >
+            <FaFilePdf className="mr-2" /> Download as PDF
+          </button>
         </div>
       </div>
     </div>
   );
 };
+
+// Subcomponent for details
+const DetailItem = ({ icon, label, value, small }) => (
+  <div className="flex items-start gap-2">
+    {icon}
+    <div>
+      <p className={`text-xs text-gray-500 ${small ? 'text-[10px]' : ''}`}>{label}</p>
+      <p className={`font-semibold ${small ? 'text-sm' : 'text-sm'}`}>{value}</p>
+    </div>
+  </div>
+);
 
 export default HealthcareCard;
