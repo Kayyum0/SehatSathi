@@ -7,7 +7,7 @@ import LandingPage from "./components/LandingPage";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/pages/Dashboard";
-import CHW_Dashboard from "./components/Chw_pages/Chw_Dashboard";
+import CHW_Dashboard from "./components/chw_pages/Chw_Dashboard";
 
 function App() {
   const [showSplash, setShowSplash] = useState(true);
