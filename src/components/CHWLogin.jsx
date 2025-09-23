@@ -1,9 +1,11 @@
-// src/components/CHWLogin.jsx
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ Import navigate
 import Logo from "../assets/chw.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function CHWLogin({ onClose }) {
+  const navigate = useNavigate(); // ✅ Setup navigate
+
   const [formData, setFormData] = useState({ chwId: "", mobile: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
@@ -31,11 +33,15 @@ export default function CHWLogin({ onClose }) {
       setTimeout(() => {
         console.log("CHW Login data:", formData);
         setIsLoading(false);
+
+        // ✅ Redirect to CHW Dashboard
+        navigate("/chw_dashboard");
+
         if (onClose) onClose();
       }, 1500);
     }
   };
-
+  
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-md flex items-center justify-center z-50">
       <div className="bg-white rounded-xl md:rounded-2xl shadow-2xl flex flex-col md:flex-row w-full max-w-2xl overflow-hidden max-h-[90vh] relative">
