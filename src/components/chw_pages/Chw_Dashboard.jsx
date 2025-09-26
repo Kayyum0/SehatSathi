@@ -52,26 +52,30 @@ export default function CHW_Dashboard() {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex h-screen overflow-hidden"> {/* 🔥 fixed layout, same as Dashboard.jsx */}
       {/* Sidebar */}
-      <aside className="w-72 bg-teal-700 text-white flex flex-col shadow-lg">
-        {/* Logo + Profile */}
-        <div className="p-6 border-b border-teal-600 text-center">
-          <img
-            src="/user.png"
-            alt="CHW Logo"
-            className="w-20 h-20 rounded-full mx-auto border-4 border-white shadow-md object-cover"
-          />
-          <h2 className="font-bold text-lg mt-3">Welcome, Ayesha</h2>
-          <p className="text-sm text-teal-100">Community Health Worker</p>
+      <aside className="w-64 bg-teal-700 text-white flex flex-col">
+        {/* Profile Header */}
+        <div className="p-6 border-b border-teal-600">
+          <div className="flex items-center gap-3">
+            <img
+              src="/user.png"
+              alt="CHW Avatar"
+              className="w-12 h-12 rounded-full border-2 border-white"
+            />
+            <div>
+              <h2 className="font-bold text-lg">Hello, Ayesha</h2>
+              <p className="text-sm text-gray-200">Health Worker</p>
+            </div>
+          </div>
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 p-4 space-y-2">
+        <nav className="flex-1 p-4 space-y-2 overflow-y-auto"> {/* 🔥 scroll inside nav only */}
           <button
             onClick={() => setActiveTab("dashboard")}
-            className={`flex items-center gap-3 w-full px-4 py-2 rounded-lg transition ${
-              activeTab === "dashboard" ? "bg-teal-600 shadow-md" : "hover:bg-teal-600"
+            className={`flex items-center gap-3 w-full px-4 py-2 rounded-lg text-left ${
+              activeTab === "dashboard" ? "bg-teal-600" : "hover:bg-teal-600"
             }`}
           >
             <FaTachometerAlt /> Dashboard
@@ -79,8 +83,8 @@ export default function CHW_Dashboard() {
 
           <button
             onClick={() => setActiveTab("add-patient")}
-            className={`flex items-center gap-3 w-full px-4 py-2 rounded-lg transition ${
-              activeTab === "add-patient" ? "bg-teal-600 shadow-md" : "hover:bg-teal-600"
+            className={`flex items-center gap-3 w-full px-4 py-2 rounded-lg text-left ${
+              activeTab === "add-patient" ? "bg-teal-600" : "hover:bg-teal-600"
             }`}
           >
             <FaUserPlus /> Add Patient
@@ -88,8 +92,8 @@ export default function CHW_Dashboard() {
 
           <button
             onClick={() => setActiveTab("patients")}
-            className={`flex items-center gap-3 w-full px-4 py-2 rounded-lg transition ${
-              activeTab === "patients" ? "bg-teal-600 shadow-md" : "hover:bg-teal-600"
+            className={`flex items-center gap-3 w-full px-4 py-2 rounded-lg text-left ${
+              activeTab === "patients" ? "bg-teal-600" : "hover:bg-teal-600"
             }`}
           >
             <FaUsers /> Patients
@@ -97,8 +101,8 @@ export default function CHW_Dashboard() {
 
           <button
             onClick={() => setActiveTab("ai-checker")}
-            className={`flex items-center gap-3 w-full px-4 py-2 rounded-lg transition ${
-              activeTab === "ai-checker" ? "bg-teal-600 shadow-md" : "hover:bg-teal-600"
+            className={`flex items-center gap-3 w-full px-4 py-2 rounded-lg text-left ${
+              activeTab === "ai-checker" ? "bg-teal-600" : "hover:bg-teal-600"
             }`}
           >
             <FaNotesMedical /> AI Symptom Checker
@@ -106,8 +110,8 @@ export default function CHW_Dashboard() {
 
           <button
             onClick={() => setActiveTab("health-card")}
-            className={`flex items-center gap-3 w-full px-4 py-2 rounded-lg transition ${
-              activeTab === "health-card" ? "bg-teal-600 shadow-md" : "hover:bg-teal-600"
+            className={`flex items-center gap-3 w-full px-4 py-2 rounded-lg text-left ${
+              activeTab === "health-card" ? "bg-teal-600" : "hover:bg-teal-600"
             }`}
           >
             <FaIdCard /> Health Card
@@ -115,8 +119,8 @@ export default function CHW_Dashboard() {
 
           <button
             onClick={() => setActiveTab("medicine-checker")}
-            className={`flex items-center gap-3 w-full px-4 py-2 rounded-lg transition ${
-              activeTab === "medicine-checker" ? "bg-teal-600 shadow-md" : "hover:bg-teal-600"
+            className={`flex items-center gap-3 w-full px-4 py-2 rounded-lg text-left ${
+              activeTab === "medicine-checker" ? "bg-teal-600" : "hover:bg-teal-600"
             }`}
           >
             <FaPills /> Medicine Checker
@@ -124,8 +128,8 @@ export default function CHW_Dashboard() {
 
           <button
             onClick={() => setActiveTab("doctor-chat")}
-            className={`flex items-center gap-3 w-full px-4 py-2 rounded-lg transition ${
-              activeTab === "doctor-chat" ? "bg-teal-600 shadow-md" : "hover:bg-teal-600"
+            className={`flex items-center gap-3 w-full px-4 py-2 rounded-lg text-left ${
+              activeTab === "doctor-chat" ? "bg-teal-600" : "hover:bg-teal-600"
             }`}
           >
             <FaComments /> Doctor Chat
@@ -136,7 +140,7 @@ export default function CHW_Dashboard() {
         <div className="p-4 border-t border-teal-600">
           <button
             onClick={handleLogout}
-            className="flex items-center gap-3 w-full px-4 py-2 rounded-lg text-left bg-red-600 hover:bg-red-700 transition"
+            className="flex items-center gap-3 w-full px-4 py-2 rounded-lg text-left hover:bg-red-600"
           >
             <FaSignOutAlt /> Logout
           </button>
@@ -144,7 +148,9 @@ export default function CHW_Dashboard() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-8">{renderContent()}</main>
+      <main className="flex-1 p-8 overflow-y-auto bg-gray-100"> {/* 🔥 scroll inside content only */}
+        {renderContent()}
+      </main>
     </div>
   );
 }

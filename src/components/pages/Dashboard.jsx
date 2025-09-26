@@ -1,6 +1,6 @@
 // src/components/pages/Dashboard.jsx
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // ✅ for redirect
+import { useNavigate } from "react-router-dom";
 import {
   FaTachometerAlt,
   FaUser,
@@ -8,48 +8,51 @@ import {
   FaHeartbeat,
   FaNotesMedical,
   FaIdCard,
+  FaPills, // ✅ medicine icon
   FaSignOutAlt,
 } from "react-icons/fa";
 
 import UserProfile from "./UserProfile";
-import DashboardMain from "./DashboardMain"; 
+import DashboardMain from "./DashboardMain";
 import Appointment from "./Appointment";
 import Emergency from "./Emergency";
 import HealthcareCard from "./HealthcareCard";
 import SymptomChecker from "./SymptomChecker";
+import MedicineChecker from "./MedicineChecker"; // ✅ new component
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("dashboard");
-  const navigate = useNavigate(); // ✅ hook for navigation
+  const navigate = useNavigate();
 
   const renderContent = () => {
     switch (activeTab) {
       case "dashboard":
         return <DashboardMain />;
       case "profile":
-        return <UserProfile />;  
+        return <UserProfile />;
       case "appointment":
-        return <Appointment />; 
+        return <Appointment />;
       case "emergency":
         return <Emergency />;
       case "ai-checker":
         return <SymptomChecker />;
       case "health-card":
         return <HealthcareCard />;
+      case "medicine-checker": // ✅ new case
+        return <MedicineChecker />;
       default:
         return null;
     }
   };
 
   const handleLogout = () => {
-    // optional: clear any login state / session
     sessionStorage.removeItem("user");
     localStorage.removeItem("user");
-    navigate("/"); // ✅ redirect to LandingPage
+    navigate("/");
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
       <aside className="w-64 bg-teal-700 text-white flex flex-col">
         <div className="p-6 border-b border-teal-600">
@@ -66,7 +69,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <nav className="flex-1 p-4 space-y-2">
+        <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
           <button
             onClick={() => setActiveTab("dashboard")}
             className={`flex items-center gap-3 w-full px-4 py-2 rounded-lg text-left ${
@@ -120,6 +123,16 @@ export default function Dashboard() {
           >
             <FaIdCard /> Health Card
           </button>
+
+          {/* ✅ New Button */}
+          <button
+            onClick={() => setActiveTab("medicine-checker")}
+            className={`flex items-center gap-3 w-full px-4 py-2 rounded-lg text-left ${
+              activeTab === "medicine-checker" ? "bg-teal-600" : "hover:bg-teal-600"
+            }`}
+          >
+            <FaPills /> Medicine Availability
+          </button>
         </nav>
 
         <div className="p-4 border-t border-teal-600">
@@ -133,7 +146,9 @@ export default function Dashboard() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-8">{renderContent()}</main>
+      <main className="flex-1 p-8 overflow-y-auto bg-gray-100">
+        {renderContent()}
+      </main>
     </div>
   );
 }
